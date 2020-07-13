@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if [ -z "$VIRTUAL_ENV" ]; then
+  echo "Error: Virtual environment not found" >&2
+  exit 1
+fi
+
+_args=''
+for _a in "$@"; do
+  _a="${_a//\\/\\\\}"
+  _args="$_args \"${_a//\"/\\\"}\""
+done
+
+sudo bash <<_EOF
+source "$VIRTUAL_ENV/bin/activate"
+$_args
+_EOF
